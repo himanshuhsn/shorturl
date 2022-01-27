@@ -23,6 +23,21 @@ def create_url(api_key, body):  # noqa: E501
     return 'do some magic!'
 
 
+def delete_url(api_key, shorturl):  # noqa: E501
+    """Deletes the short url
+
+     # noqa: E501
+
+    :param api_key: api key for deleting shorturl
+    :type api_key: str
+    :param shorturl: shorturl for deleting the shorturl
+    :type shorturl: str
+
+    :rtype: None
+    """
+    return 'do some magic!'
+
+
 def redirect_url(shorturl):  # noqa: E501
     """Redirects to long url.
 

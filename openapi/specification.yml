@@ -63,6 +63,31 @@ paths:
         "404":
           description: "shorturl not found"
       x-swagger-router-controller: "shorturl.web.controllers.urls_controller"
+    delete:
+      tags:
+      - "url"
+      summary: "Deletes the short url"
+      description: ""
+      operationId: "delete_url"
+      produces:
+      - "applicaiton/json"
+      parameters:
+      - in: "header"
+        name: "api_key"
+        description: "api key for deleting shorturl"
+        type: "string"
+        required: true
+      - name: "shorturl"
+        in: path
+        description: "shorturl for deleting the shorturl"
+        required: true
+        type: "string"
+      responses:
+        "404":
+          description: "shorturl not found"
+        "200":
+          description: "Successfully deleted"
+      x-swagger-router-controller: "shorturl.web.controllers.urls_controller"
   /user:
     post:
       tags:
