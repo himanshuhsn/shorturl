@@ -7,6 +7,8 @@ connexion==2.9.0
 distlib==0.3.4
 filelock==3.4.2
 Flask==1.1.4
+Flask-SQLAlchemy==2.5.1
+greenlet==1.1.2
 idna==3.3
 inflection==0.5.1
 itsdangerous==1.1.0
@@ -17,10 +19,12 @@ openapi-schema-validator==0.2.1
 openapi-spec-validator==0.3.1
 platformdirs==2.4.1
 protobuf==3.17.3
+psycopg2-binary==2.9.3
 pyrsistent==0.18.1
 PyYAML==5.4.1
 requests==2.27.1
 six==1.16.0
+SQLAlchemy==1.4.31
 swagger-ui-bundle==0.0.9
 urllib3==1.26.8
 virtualenv==20.13.0
