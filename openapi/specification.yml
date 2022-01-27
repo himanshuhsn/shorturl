@@ -72,21 +72,21 @@ paths:
       produces:
       - "applicaiton/json"
       parameters:
-      - in: "header"
-        name: "api_key"
+      - name: "api_key"
+        in: "header"
         description: "api key for deleting shorturl"
-        type: "string"
         required: true
+        type: "string"
       - name: "shorturl"
-        in: path
+        in: "path"
         description: "shorturl for deleting the shorturl"
         required: true
         type: "string"
       responses:
-        "404":
-          description: "shorturl not found"
         "200":
           description: "Successfully deleted"
+        "404":
+          description: "shorturl not found"
       x-swagger-router-controller: "shorturl.web.controllers.urls_controller"
   /user:
     post:
@@ -124,6 +124,11 @@ paths:
       parameters:
       - name: "username"
         in: "path"
+        description: ""
+        required: true
+        type: "string"
+      - name: "password"
+        in: "header"
         description: ""
         required: true
         type: "string"
@@ -174,7 +179,7 @@ paths:
     put:
       tags:
       - "user"
-      summary: "Update key by user name"
+      summary: "Update current key with a new generated key"
       description: ""
       operationId: "update_key"
       produces:
@@ -190,17 +195,13 @@ paths:
         description: ""
         required: true
         type: "string"
-      - in: "body"
-        name: "body"
-        description: "Updated api key object"
-        required: true
-        schema:
-          $ref: "#/definitions/ApiKeyObj"
       responses:
         "200":
-          description: "Successfully updated"
+          description: "Successfully changed the api_key"
+          schema:
+            $ref: "#/definitions/ApiKeyObj"
         "400":
-          description: "Invalid user name or password supplied"
+          description: "Invalid username or password supplied"
         "404":
           description: "User not found"
       x-swagger-router-controller: "shorturl.web.controllers.users_controller"
@@ -257,7 +258,7 @@ definitions:
   UpdatedUser:
     type: "object"
     required:
-    - "password"
+    - "newpassword"
     properties:
-      password:
+      newpassword:
         type: "string"

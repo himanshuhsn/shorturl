@@ -37,8 +37,8 @@ def get_key(username, password):  # noqa: E501
     return 'do some magic!'
 
 
-def update_key(username, password, body):  # noqa: E501
-    """Update key by user name
+def update_key(username, password):  # noqa: E501
+    """Update current key with a new generated key
 
      # noqa: E501
 
@@ -46,23 +46,21 @@ def update_key(username, password, body):  # noqa: E501
     :type username: str
     :param password: 
     :type password: str
-    :param body: Updated api key object
-    :type body: dict | bytes
 
-    :rtype: None
+    :rtype: ApiKeyObj
     """
-    if connexion.request.is_json:
-        body = ApiKeyObj.from_dict(connexion.request.get_json())  # noqa: E501
     return 'do some magic!'
 
 
-def update_user(username, body):  # noqa: E501
+def update_user(username, password, body):  # noqa: E501
     """Update user
 
      # noqa: E501
 
     :param username: 
     :type username: str
+    :param password: 
+    :type password: str
     :param body: Updated user object
     :type body: dict | bytes
 

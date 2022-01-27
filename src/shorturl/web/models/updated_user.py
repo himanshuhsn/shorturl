@@ -15,21 +15,21 @@ class UpdatedUser(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, password: str=None):  # noqa: E501
+    def __init__(self, newpassword: str=None):  # noqa: E501
         """UpdatedUser - a model defined in Swagger
 
-        :param password: The password of this UpdatedUser.  # noqa: E501
-        :type password: str
+        :param newpassword: The newpassword of this UpdatedUser.  # noqa: E501
+        :type newpassword: str
         """
         self.swagger_types = {
-            'password': str
+            'newpassword': str
         }
 
         self.attribute_map = {
-            'password': 'password'
+            'newpassword': 'newpassword'
         }
 
-        self._password = password
+        self._newpassword = newpassword
 
     @classmethod
     def from_dict(cls, dikt) -> 'UpdatedUser':
@@ -43,24 +43,24 @@ class UpdatedUser(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def password(self) -> str:
-        """Gets the password of this UpdatedUser.
+    def newpassword(self) -> str:
+        """Gets the newpassword of this UpdatedUser.
 
 
-        :return: The password of this UpdatedUser.
+        :return: The newpassword of this UpdatedUser.
         :rtype: str
         """
-        return self._password
+        return self._newpassword
 
-    @password.setter
-    def password(self, password: str):
-        """Sets the password of this UpdatedUser.
+    @newpassword.setter
+    def newpassword(self, newpassword: str):
+        """Sets the newpassword of this UpdatedUser.
 
 
-        :param password: The password of this UpdatedUser.
-        :type password: str
+        :param newpassword: The newpassword of this UpdatedUser.
+        :type newpassword: str
         """
-        if password is None:
-            raise ValueError("Invalid value for `password`, must not be `None`")  # noqa: E501
+        if newpassword is None:
+            raise ValueError("Invalid value for `newpassword`, must not be `None`")  # noqa: E501
 
-        self._password = password
+        self._newpassword = newpassword
