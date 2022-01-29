@@ -6,6 +6,8 @@ from ..models.updated_user import UpdatedUser  # noqa: E501
 from ..models.user import User  # noqa: E501
 from .. import util
 
+from ...core import users
+
 
 def create_user(body):  # noqa: E501
     """Create user
@@ -19,7 +21,12 @@ def create_user(body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = User.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+    
+    return_data = users.create_user(body)
+    if return_data != None:
+        return return_data, 200
+    else:
+        return {}, 406
 
 
 def get_key(username, password):  # noqa: E501
@@ -34,6 +41,11 @@ def get_key(username, password):  # noqa: E501
 
     :rtype: ApiKeyObj
     """
+    # return_data = users.get_key(username, password)
+    # if return_data != None:
+    #     return return_data, 200
+    # else:
+    #     return {}, 400
     return 'do some magic!'
 
 
