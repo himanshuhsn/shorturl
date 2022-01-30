@@ -8,7 +8,7 @@ class Encrypt:
         # Hash a password for the first time
         #   (Using bcrypt, the salt is saved into the hash itself)
         bytes_password = bytes(plain_text_password, 'utf-8')
-        return str(bcrypt.hashpw(bytes_password, bcrypt.gensalt()))
+        return bcrypt.hashpw(bytes_password, bcrypt.gensalt())
 
     def check_password(self, plain_text_password: str, hashed_password: bytes) -> bool:
         # Check that an unencrypted password matches one that has

@@ -4,6 +4,7 @@ import six
 from ..models.api_key_obj import ApiKeyObj  # noqa: E501
 from ..models.updated_user import UpdatedUser  # noqa: E501
 from ..models.user import User  # noqa: E501
+from ..models.api_key_obj import ApiKeyObj
 from .. import util
 
 from ...core import users
@@ -29,7 +30,7 @@ def create_user(body):  # noqa: E501
         return {}, 406
 
 
-def get_key(username, password):  # noqa: E501
+def get_key(username, password = None):  # noqa: E501
     """Get key by user name
 
      # noqa: E501
@@ -41,15 +42,16 @@ def get_key(username, password):  # noqa: E501
 
     :rtype: ApiKeyObj
     """
-    # return_data = users.get_key(username, password)
-    # if return_data != None:
-    #     return return_data, 200
-    # else:
-    #     return {}, 400
-    return 'do some magic!'
+    password = connexion.request.headers['password']
+    return_data = users.get_key(username, password)
+    if return_data != None:
+        return return_data, 200
+    else:
+        return {}, 400
+    # return 'do some magic!'
 
 
-def update_key(username, password):  # noqa: E501
+def update_key(username, password = None):  # noqa: E501
     """Update current key with a new generated key
 
      # noqa: E501
@@ -61,10 +63,16 @@ def update_key(username, password):  # noqa: E501
 
     :rtype: ApiKeyObj
     """
-    return 'do some magic!'
+    password = connexion.request.headers['password']
+    return_data = users.update_key(username, password)
+    if return_data != None:
+        return return_data, 200
+    else:
+        return {}, 400
+    # return 'do some magic!'
 
 
-def update_user(username, password, body):  # noqa: E501
+def update_user(username, body, password = None):  # noqa: E501
     """Update user
 
      # noqa: E501
@@ -80,4 +88,9 @@ def update_user(username, password, body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = UpdatedUser.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+    password = connexion.request.headers['password']
+    return_data = users.update_user(username, body, password)
+    if return_data != None:
+        return return_data, 200
+    else:
+        return {}, 400
