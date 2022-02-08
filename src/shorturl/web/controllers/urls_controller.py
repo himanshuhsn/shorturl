@@ -1,10 +1,7 @@
 import connexion
-import six
 
 from ..models.create_url_obj import CreateUrlObj  # noqa: E501
 from ..models.short_url_obj import ShortUrlObj  # noqa: E501
-from ..models.create_url_obj import CreateUrlObj 
-from .. import util
 
 from ...core import urls
 
@@ -34,10 +31,10 @@ def create_url(body, api_key=None):  # noqa: E501
 
 
 
-def delete_url(api_key, shorturl):  # noqa: E501
+def delete_url(shorturl, api_key = None):  # noqa: E501
     """Deletes the short url
 
-     # noqa: E501
+    # noqa: E501
 
     :param api_key: api key for deleting shorturl
     :type api_key: str
@@ -46,7 +43,14 @@ def delete_url(api_key, shorturl):  # noqa: E501
 
     :rtype: None
     """
-    return 'do some magic!'
+    if connexion.request.headers['api_key']:
+        key = connexion.request.headers['api_key']
+    return_data = urls.delete_url(key, shorturl)
+    print(return_data)
+    if return_data != None:
+        return {"Success" : return_data}, 200
+    else:
+        return {}, 406
 
 
 def redirect_url(shorturl):  # noqa: E501
