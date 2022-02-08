@@ -59,4 +59,8 @@ def redirect_url(shorturl):  # noqa: E501
 
     :rtype: None
     """
-    return 'do some magic!'
+    return_data = urls.redirect_url(shorturl)
+    if return_data != None:
+        return return_data, 200
+    else:
+        return {}, 406

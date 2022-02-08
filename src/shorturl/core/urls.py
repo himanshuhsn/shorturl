@@ -1,18 +1,10 @@
-from logging import exception
-from sqlite3 import IntegrityError
-
-from sqlalchemy import UniqueConstraint
-from .. import config
-from ..utils import keygenerator
-from ..utils import encrypt
-from flask import jsonify
+import string
 from ..utils.urlgenerator import URLGenerator
-
 from ..model.model import User
 from ..model.model import Shorturl
 from ..model.model import db
-import shorturl
 from datetime import datetime, timedelta
+from flask import redirect
 
 url_object = URLGenerator()
 
@@ -47,18 +39,23 @@ def create_url(body,api_key):
 
 def validate_url(surl):
     try:    
-        users = Shorturl.query.filter_by(shorturl=surl).all()
-        return users
+        urls = Shorturl.query.filter_by(shorturl=surl).first()
+        return urls
     except Exception as e:
         return(str(e))
 
 
 def delete_url(api_key, shorturl):
-    # validate the api_key
-    
-    # delete the shorturl
     pass
 
-def redirect_url(shorturl):
+def redirect_url(surl):
     # get the long url from short url
-    pass
+    url = validate_url(surl).longurl
+    try:
+        return redirect("https://"+url)
+    except:
+        try:
+            return redirect("http://"+url)
+        except:
+            return redirect(url)
+
