@@ -32,7 +32,7 @@ class User(db.Model):
 class Shorturl(db.Model):
     __tablename__ = 'shorturls'
 
-    shorturl = db.Column(db.Integer, primary_key=True)
+    shorturl = db.Column(db.String, primary_key=True)
     username = db.Column(db.String, ForeignKey('users.username'))
     longurl = db.Column(db.String)
     expiry = db.Column(db.DateTime)

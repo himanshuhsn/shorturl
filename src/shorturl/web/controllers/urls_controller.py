@@ -3,10 +3,13 @@ import six
 
 from ..models.create_url_obj import CreateUrlObj  # noqa: E501
 from ..models.short_url_obj import ShortUrlObj  # noqa: E501
+from ..models.create_url_obj import CreateUrlObj 
 from .. import util
 
+from ...core import urls
 
-def create_url(api_key, body):  # noqa: E501
+
+def create_url(body, api_key=None):  # noqa: E501
     """Generate a short url for a long url.
 
     Generate a short url for a long url. # noqa: E501
@@ -20,7 +23,15 @@ def create_url(api_key, body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = CreateUrlObj.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+    if connexion.request.headers['api_key']:
+        key = connexion.request.headers['api_key']
+
+    return_data = urls.create_url(body,key)
+    if return_data != None:
+        return return_data, 200
+    else:
+        return {}, 406
+
 
 
 def delete_url(api_key, shorturl):  # noqa: E501
