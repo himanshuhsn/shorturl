@@ -39,7 +39,7 @@ def create_user(body):
         )
         db.session.add(new_user)
         db.session.commit()
-        return "User added. username = {}".format(new_user.username)
+        return dev_key
     except Exception as e:
         return(str(e))
 

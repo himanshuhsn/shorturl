@@ -4,36 +4,36 @@ info:
   title: "shorturl"
 basePath: "/v1"
 tags:
-- name: "url"
-  description: "Everything about the url handling"
-- name: "user"
-  description: "Operations about user"
+  - name: "url"
+    description: "Everything about the url handling"
+  - name: "user"
+    description: "Operations about user"
 schemes:
-- "http"
+  - "http"
 paths:
   /url:
     post:
       tags:
-      - "url"
+        - "url"
       summary: "Generate a short url for a long url."
       description: "Generate a short url for a long url."
       operationId: "create_url"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "api_key"
-        in: "header"
-        description: "api key for generating short url"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: ""
-        required: true
-        schema:
-          $ref: "#/definitions/CreateUrlObj"
+        - name: "api_key"
+          in: "header"
+          description: "api key for generating short url"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/CreateUrlObj"
       responses:
         "200":
           description: "Return short url"
@@ -45,43 +45,43 @@ paths:
   /url/{shorturl}:
     get:
       tags:
-      - "url"
+        - "url"
       summary: "Redirects to long url."
       description: ""
       operationId: "redirect_url"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "shorturl"
-        in: "path"
-        description: "shorturl for the fetching the corresponding long url"
-        required: true
-        type: "string"
+        - name: "shorturl"
+          in: "path"
+          description: "shorturl for the fetching the corresponding long url"
+          required: true
+          type: "string"
       responses:
-        "308":
+        "302":
           description: "Redirection successful."
         "404":
           description: "shorturl not found"
       x-swagger-router-controller: "shorturl.web.controllers.urls_controller"
     delete:
       tags:
-      - "url"
+        - "url"
       summary: "Deletes the short url"
       description: ""
       operationId: "delete_url"
       produces:
-      - "applicaiton/json"
+        - "applicaiton/json"
       parameters:
-      - name: "api_key"
-        in: "header"
-        description: "api key for deleting shorturl"
-        required: true
-        type: "string"
-      - name: "shorturl"
-        in: "path"
-        description: "shorturl for deleting the shorturl"
-        required: true
-        type: "string"
+        - name: "api_key"
+          in: "header"
+          description: "api key for deleting shorturl"
+          required: true
+          type: "string"
+        - name: "shorturl"
+          in: "path"
+          description: "shorturl for deleting the shorturl"
+          required: true
+          type: "string"
       responses:
         "200":
           description: "Successfully deleted"
@@ -91,19 +91,19 @@ paths:
   /user:
     post:
       tags:
-      - "user"
+        - "user"
       summary: "Create user"
       description: ""
       operationId: "create_user"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "User object for creating new user."
-        required: true
-        schema:
-          $ref: "#/definitions/User"
+        - in: "body"
+          name: "body"
+          description: "User object for creating new user."
+          required: true
+          schema:
+            $ref: "#/definitions/User"
       responses:
         "200":
           description: "Return api key"
@@ -115,29 +115,29 @@ paths:
   /user/{username}:
     put:
       tags:
-      - "user"
+        - "user"
       summary: "Update user"
       description: ""
       operationId: "update_user"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "username"
-        in: "path"
-        description: ""
-        required: true
-        type: "string"
-      - name: "password"
-        in: "header"
-        description: ""
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: "Updated user object"
-        required: true
-        schema:
-          $ref: "#/definitions/UpdatedUser"
+        - name: "username"
+          in: "path"
+          description: ""
+          required: true
+          type: "string"
+        - name: "password"
+          in: "header"
+          description: ""
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Updated user object"
+          required: true
+          schema:
+            $ref: "#/definitions/UpdatedUser"
       responses:
         "200":
           description: "Password updated successfully"
@@ -149,23 +149,23 @@ paths:
   /user/key/{username}:
     get:
       tags:
-      - "user"
+        - "user"
       summary: "Get key by user name"
       description: ""
       operationId: "get_key"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "username"
-        in: "path"
-        description: "The username for which key is to be fetched."
-        required: true
-        type: "string"
-      - name: "password"
-        in: "header"
-        description: ""
-        required: true
-        type: "string"
+        - name: "username"
+          in: "path"
+          description: "The username for which key is to be fetched."
+          required: true
+          type: "string"
+        - name: "password"
+          in: "header"
+          description: ""
+          required: true
+          type: "string"
       responses:
         "200":
           description: "successful operation"
@@ -178,23 +178,23 @@ paths:
       x-swagger-router-controller: "shorturl.web.controllers.users_controller"
     put:
       tags:
-      - "user"
+        - "user"
       summary: "Update current key with a new generated key"
       description: ""
       operationId: "update_key"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "username"
-        in: "path"
-        description: "The username for which api key is to be updated."
-        required: true
-        type: "string"
-      - name: "password"
-        in: "header"
-        description: ""
-        required: true
-        type: "string"
+        - name: "username"
+          in: "path"
+          description: "The username for which api key is to be updated."
+          required: true
+          type: "string"
+        - name: "password"
+          in: "header"
+          description: ""
+          required: true
+          type: "string"
       responses:
         "200":
           description: "Successfully changed the api_key"
@@ -209,7 +209,7 @@ definitions:
   CreateUrlObj:
     type: "object"
     required:
-    - "long_url"
+      - "long_url"
     properties:
       long_url:
         type: "string"
@@ -227,7 +227,7 @@ definitions:
   ShortUrlObj:
     type: "object"
     required:
-    - "short_url"
+      - "short_url"
     properties:
       short_url:
         type: "string"
@@ -236,7 +236,7 @@ definitions:
   ApiKeyObj:
     type: "object"
     required:
-    - "api_key"
+      - "api_key"
     properties:
       api_key:
         type: "string"
@@ -245,9 +245,9 @@ definitions:
   User:
     type: "object"
     required:
-    - "email"
-    - "password"
-    - "username"
+      - "email"
+      - "password"
+      - "username"
     properties:
       username:
         type: "string"
@@ -258,7 +258,7 @@ definitions:
   UpdatedUser:
     type: "object"
     required:
-    - "newpassword"
+      - "newpassword"
     properties:
       newpassword:
         type: "string"
