@@ -78,6 +78,6 @@ def redirect_url(shorturl):  # noqa: E501
         elif long_url[:8] == "https://":
             long_url = long_url[8:]
         try:
-            return redirect("https://"+long_url),302
+            return redirect("https://"+long_url),303
         except:
-            return redirect("http://"+long_url),302
+            return redirect("http://"+long_url),303

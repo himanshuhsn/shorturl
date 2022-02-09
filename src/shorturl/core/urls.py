@@ -6,6 +6,19 @@ from datetime import datetime, timedelta
 
 url_object = URLGenerator()
 
+def check_api_key_user(api_key, short_url):
+    try:
+        user = User.query.filter_by(key=api_key).first()
+    except Exception as e:
+        return(str(e))
+    try:
+        urls = Shorturl.query.filter_by(shorturl=short_url).first()
+    except Exception as e:
+        return(str(e))
+    if user and urls and user.username == urls.username:
+        return True
+    return False
+
 def check_api_key(api_key):
     try:
         user = User.query.filter_by(key=api_key).first()
@@ -75,7 +88,7 @@ def validate_url(shorturl):
 
 def delete_url(api_key, shorturl):
     # validate the api_key
-    if not check_api_key(api_key):
+    if not check_api_key_user(api_key, shorturl):
         return "WRONG_API_KEY"
 
     # check if url exists 

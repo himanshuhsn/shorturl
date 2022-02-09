@@ -75,7 +75,7 @@ paths:
           required: true
           type: "string"
       responses:
-        "302":
+        "303":
           description: "Redirection successful."
         "404":
           description: "shorturl not found"
