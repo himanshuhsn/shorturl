@@ -4,6 +4,8 @@ info:
   title: "shorturl"
 basePath: "/v1"
 tags:
+  - name: "home"
+    description: "Home Page"
   - name: "url"
     description: "Everything about the url handling"
   - name: "user"
@@ -11,6 +13,21 @@ tags:
 schemes:
   - "http"
 paths:
+  /:
+    get:
+      tags:
+        - "home"
+      summary: "Home to shorturl services."
+      description: "Home to shorturl services."
+      operationId: "home_url"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "successful connection."
+        "404":
+          description: "page not found"
+      x-swagger-router-controller: "shorturl.web.controllers.home_controller"
   /url:
     post:
       tags:
