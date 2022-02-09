@@ -3,7 +3,6 @@ from ..model.model import User
 from ..model.model import Shorturl
 from ..model.model import db
 from datetime import datetime, timedelta
-from flask import redirect
 
 url_object = URLGenerator()
 
@@ -36,9 +35,9 @@ def create_url(body,api_key):
     except Exception as e:
         return(str(e))
 
-def validate_url(surl):
+def validate_url(shorturl):
     try:    
-        urls = Shorturl.query.filter_by(shorturl=surl).first()
+        urls = Shorturl.query.filter_by(shorturl=shorturl).first()
         return urls
     except Exception as e:
         return(str(e))
@@ -64,17 +63,16 @@ def delete_url(api_key, shorturl):
             return str(e)
     
 
-def redirect_url(surl):
-    # get the long url from short url
-    url = validate_url(surl).longurl
-    if url == None:
+def redirect_url(shorturl):
+    # check if url exists or not
+    if validate_url(shorturl) == None:
         return None
-    else:
-        try:
-            return redirect("https://"+url)
-        except:
-            try:
-                return redirect("http://"+url)
-            except:
-                return redirect(url)
+    # get the long url from short url
+    try:
+        url = validate_url(shorturl).longurl
+    except Exception as e:
+        print(str(e))
+        return None
+    return url
+    
 

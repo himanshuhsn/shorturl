@@ -4,6 +4,7 @@ from ..models.create_url_obj import CreateUrlObj  # noqa: E501
 from ..models.short_url_obj import ShortUrlObj  # noqa: E501
 
 from ...core import urls
+from flask import redirect
 
 
 def create_url(body, api_key=None):  # noqa: E501
@@ -63,8 +64,14 @@ def redirect_url(shorturl):  # noqa: E501
 
     :rtype: None
     """
-    return_data = urls.redirect_url(shorturl)
-    if return_data != None:
-        return return_data, 200
-    else:
-        return {}, 406
+    long_url = urls.redirect_url(shorturl)
+    if long_url == None:
+        return {}, 404
+    else:    
+        try:
+            return redirect("https://"+long_url),302
+        except:
+            try:
+                return redirect("http://"+long_url),302
+            except:
+                return redirect(long_url),302
