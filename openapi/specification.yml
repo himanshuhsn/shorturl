@@ -10,6 +10,8 @@ tags:
     description: "Everything about the url handling"
   - name: "user"
     description: "Operations about user"
+  - name: "favorite"
+    description: "Favorite url feature"
 schemes:
   - "http"
 paths:
@@ -22,6 +24,7 @@ paths:
       operationId: "home_url"
       produces:
         - "application/json"
+      parameters: []
       responses:
         "200":
           description: "successful connection."
@@ -222,7 +225,80 @@ paths:
         "404":
           description: "User not found"
       x-swagger-router-controller: "shorturl.web.controllers.users_controller"
+  /favorite:
+    get:
+      tags:
+        - "favorite"
+      summary: "Get favorite urls by user name"
+      description: "Get favorite urls by user name"
+      operationId: "get_favorite"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          description: "api key of user"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful gives favorite url list"
+          schema:
+            $ref: "#/definitions/FavoriteUrlListObj"
+        "400":
+          description: "Wrong Api key"
+        "404":
+          description: "User not found"
+      x-swagger-router-controller: "shorturl.web.controllers.favorite_controller"
+    post:
+      tags:
+        - "favorite"
+      summary: "Mark an existing url as favorite"
+      description: "Mark an existing url as favorite"
+      operationId: "mark_favorite"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          description: "api key for marking short url as favorite"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Shorturl to be marked favorite"
+          required: true
+          schema:
+            $ref: "#/definitions/MarkFavoriteObj"
+      responses:
+        "200":
+          description: "Url marked successfully"
+        "406":
+          description: "ShortUrl does not exists"
+      x-swagger-router-controller: "shorturl.web.controllers.favorite_controller"
 definitions:
+  FavoriteUrlListObj:
+    type: "object"
+    properties:
+      favorite_list:
+        type: "array"
+        items:
+          type: "string"
+    example:
+      favorite_list: "[shorturl_1, shorturl_2, shorturl_3]"
+  MarkFavoriteObj:
+    type: "object"
+    required:
+      - "markfavorite"
+      - "shorturl"
+    properties:
+      shorturl:
+        type: "string"
+      markfavorite:
+        type: "string"
+    example:
+      shorturl: "custom_alias"
+      markfavorite: "0"
   CreateUrlObj:
     type: "object"
     required:
@@ -244,12 +320,12 @@ definitions:
   ShortUrlObj:
     type: "object"
     required:
-      - "short_url"
+      - "shorturl"
     properties:
-      short_url:
+      shorturl:
         type: "string"
     example:
-      short_url: "short_url"
+      shorturl: "shorturl"
   ApiKeyObj:
     type: "object"
     required:

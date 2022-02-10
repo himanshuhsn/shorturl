@@ -12,6 +12,8 @@ class User(db.Model):
     key = db.Column(db.String(), nullable=False)
     quota = db.Column(db.Integer, nullable=False)
 
+    __table_args__ = (Index('find_user_index', "key"), )
+
     def __init__(self, username, email, password, key, quota):
         self.username = username
         self.email = email
@@ -36,8 +38,9 @@ class Shorturl(db.Model):
     username = db.Column(db.String, ForeignKey('users.username'))
     longurl = db.Column(db.String)
     expiry = db.Column(db.DateTime)
+    favorite = db.Column(db.Boolean, unique=False, default=False)
 
-    __table_args__ = (Index('find_shorturl_index', "username", "longurl"), )
+    __table_args__ = (Index('find_shorturl_index', "username"), )
 
     def __init__(self, shorturl, longurl, username, expiry):
         self.shorturl = shorturl
