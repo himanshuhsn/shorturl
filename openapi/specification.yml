@@ -41,7 +41,7 @@ paths:
             $ref: "#/definitions/ShortUrlObj"
         "400":
           description: "Invalid input syntax"
-      x-swagger-router-controller: "shorturl.web.controllers.urls_controller"
+      x-swagger-router-controller: "src.shorturl.web.controllers.urls_controller"
   /url/{shorturl}:
     get:
       tags:
@@ -62,7 +62,7 @@ paths:
           description: "Redirection successful."
         "404":
           description: "shorturl not found"
-      x-swagger-router-controller: "shorturl.web.controllers.urls_controller"
+      x-swagger-router-controller: "src.shorturl.web.controllers.urls_controller"
     delete:
       tags:
         - "url"
@@ -87,7 +87,7 @@ paths:
           description: "Successfully deleted"
         "404":
           description: "shorturl not found"
-      x-swagger-router-controller: "shorturl.web.controllers.urls_controller"
+      x-swagger-router-controller: "src.shorturl.web.controllers.urls_controller"
   /user:
     post:
       tags:
@@ -111,7 +111,7 @@ paths:
             $ref: "#/definitions/ApiKeyObj"
         "406":
           description: "User name already exists"
-      x-swagger-router-controller: "shorturl.web.controllers.users_controller"
+      x-swagger-router-controller: "src.shorturl.web.controllers.users_controller"
   /user/{username}:
     put:
       tags:
@@ -145,7 +145,7 @@ paths:
           description: "Invalid user supplied"
         "404":
           description: "User not found"
-      x-swagger-router-controller: "shorturl.web.controllers.users_controller"
+      x-swagger-router-controller: "src.shorturl.web.controllers.users_controller"
   /user/key/{username}:
     get:
       tags:
@@ -175,7 +175,7 @@ paths:
           description: "Invalid username supplied"
         "404":
           description: "User not found"
-      x-swagger-router-controller: "shorturl.web.controllers.users_controller"
+      x-swagger-router-controller: "src.shorturl.web.controllers.users_controller"
     put:
       tags:
         - "user"
@@ -204,7 +204,7 @@ paths:
           description: "Invalid username or password supplied"
         "404":
           description: "User not found"
-      x-swagger-router-controller: "shorturl.web.controllers.users_controller"
+      x-swagger-router-controller: "src.shorturl.web.controllers.users_controller"
 definitions:
   CreateUrlObj:
     type: "object"
