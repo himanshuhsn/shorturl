@@ -4,7 +4,7 @@ from ..model.model import User
 from ..model.model import Shorturl
 from ..model.model import db
 from datetime import datetime, timedelta
-from ..config import TIME_FRAME, ALLOWED_API_CALL
+from ..config import TIME_FRAME, ALLOWED_API_CALL, DEFAULT_EXPIRY
 import time
 
 url_object = URLGenerator()
@@ -70,9 +70,9 @@ def create_url(body,api_key):
     
     #parsing time_to_live
     if body.time_to_live == '':
-        expiry = datetime.utcnow() + timedelta(days=1)
+        expiry = int(time.time()) + DEFAULT_EXPIRY
     else:
-        expiry = datetime.utcnow() + timedelta(seconds=int(body.time_to_live))
+        expiry = int(time.time()) + int(body.time_to_live)
 
     #parsing custom_alias
     if body.custom_alias == '':

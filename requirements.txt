@@ -1,5 +1,7 @@
 alembic==1.7.6
+APScheduler==3.8.1
 attrs==21.4.0
+backports.zoneinfo==0.2.1
 bcrypt==3.2.0
 certifi==2021.10.8
 cffi==1.15.0
@@ -29,11 +31,15 @@ protobuf==3.17.3
 psycopg2-binary==2.9.3
 pycparser==2.21
 pyrsistent==0.18.1
+pytz==2021.3
+pytz-deprecation-shim==0.1.0.post0
 PyYAML==5.4.1
 requests==2.27.1
 six==1.16.0
 SQLAlchemy==1.4.31
 swagger-ui-bundle==0.0.9
+tzdata==2021.5
+tzlocal==4.1
 urllib3==1.26.8
 virtualenv==20.13.0
 Werkzeug==1.0.1

@@ -39,7 +39,7 @@ class Shorturl(db.Model):
     shorturl = db.Column(db.String, primary_key=True)
     username = db.Column(db.String, ForeignKey('users.username'))
     longurl = db.Column(db.String)
-    expiry = db.Column(db.DateTime)
+    expiry = db.Column(db.Integer)
     favorite = db.Column(db.Boolean, unique=False, default=False)
 
     __table_args__ = (Index('find_shorturl_index', "username"), )
