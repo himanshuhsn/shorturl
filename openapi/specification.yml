@@ -297,7 +297,7 @@ definitions:
       markfavorite:
         type: "string"
     example:
-      shorturl: "custom_alias"
+      shorturl: "shorturl"
       markfavorite: "0"
   CreateUrlObj:
     type: "object"
@@ -313,9 +313,9 @@ definitions:
       time_to_live:
         type: "string"
     example:
-      time_to_live: "time_to_live"
-      custom_alias: "custom_alias"
-      long_url: "long_url"
+      time_to_live: "100"
+      custom_alias: "shorturl"
+      long_url: "www.google.com"
       username: "username"
   ShortUrlObj:
     type: "object"
@@ -348,6 +348,10 @@ definitions:
         type: "string"
       password:
         type: "string"
+    example:
+      username: "username"
+      email: "email"
+      password: "password"
   UpdatedUser:
     type: "object"
     required:
@@ -355,3 +359,5 @@ definitions:
     properties:
       newpassword:
         type: "string"
+    example:
+      newpassword: "newpassword"
