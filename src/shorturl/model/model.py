@@ -11,15 +11,17 @@ class User(db.Model):
     password = db.Column(db.String(), nullable=False)
     key = db.Column(db.String(), nullable=False)
     quota = db.Column(db.Integer, nullable=False)
+    last_exp_time = db.Column(db.Integer, nullable=False)
 
     __table_args__ = (Index('find_user_index', "key"), )
 
-    def __init__(self, username, email, password, key, quota):
+    def __init__(self, username, email, password, key, quota, last_exp_time):
         self.username = username
         self.email = email
         self.password = password
         self.key = key
         self.quota = quota
+        self.last_exp_time = last_exp_time
 
     def serialize(self):
         return {

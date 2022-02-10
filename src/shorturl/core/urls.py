@@ -1,8 +1,11 @@
+from distutils.command.config import config
 from ..utils.urlgenerator import URLGenerator
 from ..model.model import User
 from ..model.model import Shorturl
 from ..model.model import db
 from datetime import datetime, timedelta
+from ..config import TIME_FRAME, ALLOWED_API_CALL
+import time
 
 url_object = URLGenerator()
 
@@ -28,11 +31,43 @@ def check_api_key(api_key):
     except Exception as e:
         return(str(e))
 
+def check_quota(api_key, period):
+    if period <= 0:
+        return "PERIOD_INVALID"
+
+    try:
+        row_last_expire_time = User.query.filter_by(key=api_key).first()
+    except Exception as e:
+        return(str(e))
+
+    cur_time = int(time.time())
+
+    last_expire_time = row_last_expire_time.last_exp_time
+
+    if cur_time-last_expire_time < period:
+        return True
+
+    batch_diff = int(( cur_time-last_expire_time ) // period)
+
+    updated_exp_time_in_utc = last_expire_time + (batch_diff)*period
+
+    try:
+        row_last_expire_time.last_exp_time = updated_exp_time_in_utc - 1
+        row_last_expire_time.quota = ALLOWED_API_CALL
+        db.session.commit()
+    except Exception as e:
+        return(str(e))
+
+    return True
+
 def create_url(body,api_key):
     #check api_key
     if not check_api_key(api_key):
         return "WRONG_API_KEY"
 
+    # check if user is allowed
+    check_quota(api_key, TIME_FRAME)
+    
     #parsing time_to_live
     if body.time_to_live == '':
         expiry = datetime.utcnow() + timedelta(days=1)
