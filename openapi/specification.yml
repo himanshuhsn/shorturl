@@ -78,7 +78,7 @@ paths:
           required: true
           type: "string"
       responses:
-        "303":
+        "302":
           description: "Redirection successful, if response 0 appear in swagger then copy and use response url in new tab"
         "404":
           description: "shorturl not found"

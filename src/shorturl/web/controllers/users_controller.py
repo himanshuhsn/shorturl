@@ -27,7 +27,7 @@ def create_user(body):  # noqa: E501
     if return_data != None:
         return {"api_key" : return_data}, 200
     else:
-        return {"error" : "USER_ALREADY_EXISTS"}, 406
+        return {"error" : "USERNAME_ALREADY_EXISTS"}, 406
 
 
 def get_key(username, password = None):  # noqa: E501
@@ -45,10 +45,9 @@ def get_key(username, password = None):  # noqa: E501
     password = connexion.request.headers['password']
     return_data = users.get_key(username, password)
     if return_data != None:
-        return return_data, 200
+        return {"api_key" : return_data}, 200
     else:
         return {}, 400
-    # return 'do some magic!'
 
 
 def update_key(username, password = None):  # noqa: E501

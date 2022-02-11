@@ -60,10 +60,23 @@ def check_quota(api_key, period):
 
     return True
 
+def check_username(username, api_key):
+    try:
+        user = User.query.filter_by(key=api_key).first()
+        if user.username == username:
+            return True
+        return False
+    except Exception as e:
+        return str(e)
+
 def create_url(body,api_key):
     #check api_key
     if not check_api_key(api_key):
         return "WRONG_API_KEY"
+
+    # check correct username
+    if not check_username(body.username, api_key):
+        return "WRONG_USER_NAME"
 
     # check if user is allowed
     check_quota(api_key, TIME_FRAME)
@@ -124,7 +137,7 @@ def validate_url(shorturl):
 def delete_url(api_key, shorturl):
     # validate the api_key
     if not check_api_key_user(api_key, shorturl):
-        return "WRONG_API_KEY"
+        return "WRONG_API_KEY_OR_URL_DOES_NOT_EXISTS"
 
     # check if url exists 
     if validate_url(shorturl) == None:
