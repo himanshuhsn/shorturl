@@ -1,6 +1,7 @@
 from ..model.model import User
 from ..model.model import Shorturl
 from ..model.model import db
+import time
 
 def check_api_key_user(api_key, short_url):
     try:
@@ -64,8 +65,12 @@ def get_favorite(api_key):
     # query urls for all the urls marked as favorite of username
     # return list of favorite urls
     try:
+        cur_time = int(time.time())
         favorite_list = Shorturl.query.filter_by(username=username, favorite = True).all()
-        favorite_shorturl = [url.shorturl for url in favorite_list]
+        favorite_shorturl = []
+        for url in favorite_list:
+            if url.expiry > cur_time+10: 
+                favorite_shorturl.append(url.shorturl) 
         return favorite_shorturl
     except Exception as e:
         return(str(e))

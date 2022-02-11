@@ -6,10 +6,10 @@ basePath: "/v1"
 tags:
   - name: "home"
     description: "Home Page"
-  - name: "url"
-    description: "Everything about the url handling"
   - name: "user"
     description: "Operations about user"
+  - name: "url"
+    description: "Everything about the url handling"
   - name: "favorite"
     description: "Favorite url feature"
 schemes:
@@ -79,7 +79,7 @@ paths:
           type: "string"
       responses:
         "303":
-          description: "Redirection successful."
+          description: "Redirection successful, if response 0 appear in swagger then copy and use response url in new tab"
         "404":
           description: "shorturl not found"
       x-swagger-router-controller: "shorturl.web.controllers.urls_controller"

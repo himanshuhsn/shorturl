@@ -128,7 +128,7 @@ def delete_url(api_key, shorturl):
 
     # check if url exists 
     if validate_url(shorturl) == None:
-        return None
+        return "SHORT_URL_DOES_NOT_EXISTS"
     else:
         # delete the shorturl
         try:
@@ -142,12 +142,15 @@ def delete_url(api_key, shorturl):
 def redirect_url(shorturl):
     # check if url exists or not
     if validate_url(shorturl) == None:
-        return None
+        return "SHORT_URL_DOES_NOT_EXISTS"
     # get the long url from short url
     try:
-        url = Shorturl.query.filter_by(shorturl=shorturl).first().longurl
+        query_object = Shorturl.query.filter_by(shorturl=shorturl).first()
+        cur_time = time.time()
+        if(int(cur_time) > query_object.expiry):
+            return "SHORT_URL_EXPIRED"
+        url = query_object.longurl
         return url
     except Exception as e:
-        print(str(e))
         return None
     
