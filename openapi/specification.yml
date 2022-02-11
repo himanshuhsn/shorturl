@@ -30,7 +30,7 @@ paths:
           description: "successful connection."
         "404":
           description: "page not found"
-      x-swagger-router-controller: "shorturl.web.controllers.home_controller"
+      x-swagger-router-controller: "src.shorturl.web.controllers.home_controller"
   /url:
     post:
       tags:
