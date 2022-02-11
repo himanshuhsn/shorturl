@@ -1,6 +1,11 @@
 import os
 
-ALLOWED_API_CALL_PER_MONTH = os.environ['ALLOWED_API_CALL_PER_MONTH']
+# Times are in seconds
+ALLOWED_API_CALL = os.environ['ALLOWED_API_CALL']
+TIME_FRAME = os.environ['TIME_FRAME']
+TABLE_CLEAN_PERIOD = os.environ['TABLE_CLEAN_PERIOD']
+DEFAULT_EXPIRY = os.environ['DEFAULT_EXPIRY']
+
 USER = os.environ['USER']
 PASSWORD = os.environ['PASSWORD']
 HOST = os.environ['HOST']
