@@ -4,13 +4,33 @@ info:
   title: "shorturl"
 basePath: "/v1"
 tags:
-  - name: "url"
-    description: "Everything about the url handling"
+  - name: "home"
+    description: "Home Page"
   - name: "user"
     description: "Operations about user"
+  - name: "url"
+    description: "Everything about the url handling"
+  - name: "favorite"
+    description: "Favorite url feature"
 schemes:
   - "http"
 paths:
+  /:
+    get:
+      tags:
+        - "home"
+      summary: "Home to shorturl services."
+      description: "Home to shorturl services."
+      operationId: "home_url"
+      produces:
+        - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "successful connection."
+        "404":
+          description: "page not found"
+      x-swagger-router-controller: "shorturl.web.controllers.home_controller"
   /url:
     post:
       tags:
@@ -59,7 +79,7 @@ paths:
           type: "string"
       responses:
         "302":
-          description: "Redirection successful."
+          description: "Redirection successful, if response 0 appear in swagger then copy and use response url in new tab"
         "404":
           description: "shorturl not found"
       x-swagger-router-controller: "src.shorturl.web.controllers.urls_controller"
@@ -205,7 +225,80 @@ paths:
         "404":
           description: "User not found"
       x-swagger-router-controller: "src.shorturl.web.controllers.users_controller"
+  /favorite:
+    get:
+      tags:
+        - "favorite"
+      summary: "Get favorite urls by user name"
+      description: "Get favorite urls by user name"
+      operationId: "get_favorite"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          description: "api key of user"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful gives favorite url list"
+          schema:
+            $ref: "#/definitions/FavoriteUrlListObj"
+        "400":
+          description: "Wrong Api key"
+        "404":
+          description: "User not found"
+      x-swagger-router-controller: "src.shorturl.web.controllers.favorite_controller"
+    post:
+      tags:
+        - "favorite"
+      summary: "Mark an existing url as favorite"
+      description: "Mark an existing url as favorite"
+      operationId: "mark_favorite"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          description: "api key for marking short url as favorite"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Shorturl to be marked favorite"
+          required: true
+          schema:
+            $ref: "#/definitions/MarkFavoriteObj"
+      responses:
+        "200":
+          description: "Url marked successfully"
+        "406":
+          description: "ShortUrl does not exists"
+      x-swagger-router-controller: "src.shorturl.web.controllers.favorite_controller"
 definitions:
+  FavoriteUrlListObj:
+    type: "object"
+    properties:
+      favorite_list:
+        type: "array"
+        items:
+          type: "string"
+    example:
+      favorite_list: "[shorturl_1, shorturl_2, shorturl_3]"
+  MarkFavoriteObj:
+    type: "object"
+    required:
+      - "markfavorite"
+      - "shorturl"
+    properties:
+      shorturl:
+        type: "string"
+      markfavorite:
+        type: "string"
+    example:
+      shorturl: "shorturl"
+      markfavorite: "0"
   CreateUrlObj:
     type: "object"
     required:
@@ -220,19 +313,19 @@ definitions:
       time_to_live:
         type: "string"
     example:
-      time_to_live: "time_to_live"
-      custom_alias: "custom_alias"
-      long_url: "long_url"
+      time_to_live: "100"
+      custom_alias: "shorturl"
+      long_url: "www.google.com"
       username: "username"
   ShortUrlObj:
     type: "object"
     required:
-      - "short_url"
+      - "shorturl"
     properties:
-      short_url:
+      shorturl:
         type: "string"
     example:
-      short_url: "short_url"
+      shorturl: "shorturl"
   ApiKeyObj:
     type: "object"
     required:
@@ -255,6 +348,10 @@ definitions:
         type: "string"
       password:
         type: "string"
+    example:
+      username: "username"
+      email: "email"
+      password: "password"
   UpdatedUser:
     type: "object"
     required:
@@ -262,3 +359,5 @@ definitions:
     properties:
       newpassword:
         type: "string"
+    example:
+      newpassword: "newpassword"

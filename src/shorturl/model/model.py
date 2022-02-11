@@ -11,13 +11,17 @@ class User(db.Model):
     password = db.Column(db.String(), nullable=False)
     key = db.Column(db.String(), nullable=False)
     quota = db.Column(db.Integer, nullable=False)
+    last_exp_time = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, username, email, password, key, quota):
+    __table_args__ = (Index('find_user_index', "key"), )
+
+    def __init__(self, username, email, password, key, quota, last_exp_time):
         self.username = username
         self.email = email
         self.password = password
         self.key = key
         self.quota = quota
+        self.last_exp_time = last_exp_time
 
     def serialize(self):
         return {
@@ -35,9 +39,10 @@ class Shorturl(db.Model):
     shorturl = db.Column(db.String, primary_key=True)
     username = db.Column(db.String, ForeignKey('users.username'))
     longurl = db.Column(db.String)
-    expiry = db.Column(db.DateTime)
+    expiry = db.Column(db.Integer)
+    favorite = db.Column(db.Boolean, unique=False, default=False)
 
-    __table_args__ = (Index('find_shorturl_index', "username", "longurl"), )
+    __table_args__ = (Index('find_shorturl_index', "username"), )
 
     def __init__(self, shorturl, longurl, username, expiry):
         self.shorturl = shorturl

@@ -25,12 +25,18 @@ def create_url(body, api_key=None):  # noqa: E501
         key = connexion.request.headers['api_key']
 
     return_data = urls.create_url(body,key)
-    if return_data == "KEY_QUOTA_EXPIRED":
-        return {"error" : "KEY_QUOTA_EXPIRED"}, 403
-    elif return_data == "WRONG_API_KEY":
+    if return_data == "WRONG_API_KEY":
         return {"error" : "WRONG_API_KEY"}, 406
     elif return_data == "CUSTOM_ALIAS_ALREADY_EXISTS":
         return {"error": "CUSTOM_ALIAS_ALREADY_EXISTS"}, 406
+    elif return_data == "LIMIT_EXCEEDED":
+        return {"error": return_data}, 403
+    elif return_data == "SHORT_URL_EXPIRED":
+        return {"error": return_data}, 406
+    elif return_data == "SHORT_URL_DOES_NOT_EXISTS":
+        return {"error": return_data},406
+    elif return_data == "WRONG_USER_NAME":
+        return {"error": return_data},406
     elif return_data != None:
         return {"short_url" : return_data}, 200
     else:
@@ -53,8 +59,12 @@ def delete_url(shorturl, api_key = None):  # noqa: E501
     if connexion.request.headers['api_key']:
         key = connexion.request.headers['api_key']
     return_data = urls.delete_url(key, shorturl)
-    if return_data != None:
-        return {"Success" : return_data}, 200
+    if return_data == "WRONG_API_KEY_OR_URL_DOES_NOT_EXISTS":
+        return {"Error" : return_data}, 406
+    elif return_data == "SHORT_URL_DOES_NOT_EXISTS":
+        return {"Error" : return_data}, 404
+    elif return_data != None:
+        return {"Message" : return_data}, 200
     else:
         return {}, 406
 
@@ -70,8 +80,12 @@ def redirect_url(shorturl):  # noqa: E501
     :rtype: None
     """
     long_url = urls.redirect_url(shorturl)
-    if long_url == None:
-        return {}, 404
+    if long_url == "SHORT_URL_EXPIRED":
+        return {"error": long_url}, 404
+    elif long_url == "SHORT_URL_DOES_NOT_EXISTS":
+        return {"error": long_url},404
+    elif long_url == None:
+        return {"error": "SHORTURL_DOES_NOT_EXISTS"}, 404
     else:    
         if long_url[:7] == "http://":
             long_url = long_url[7:]

@@ -7,6 +7,9 @@ from flask import jsonify
 from ..model.model import User
 from ..model.model import db
 
+from datetime import datetime
+import time
+
 key_object = keygenerator.KeyGenerator()
 encrypt = encrypt.Encrypt()
 
@@ -25,7 +28,7 @@ def create_user(body):
     key_object.generateKey(10)
     dev_key = key_object.getKey()
     # get the quota from config.py
-    quota = config.ALLOWED_API_CALL_PER_MONTH
+    quota = config.ALLOWED_API_CALL
     # encrypt password
     encrypted_password = encrypt.get_hashed_password(body.password).decode('utf8') 
     # insert item into user table
@@ -35,7 +38,8 @@ def create_user(body):
                 email = body.email,
                 password = encrypted_password,
                 key = dev_key,
-                quota = quota
+                quota = quota,
+                last_exp_time = int(time.time())
         )
         db.session.add(new_user)
         db.session.commit()
