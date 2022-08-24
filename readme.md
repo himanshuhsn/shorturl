@@ -1,3 +1,10 @@
+### What is this project about?
+- This is a [url shortening](https://en.wikipedia.org/wiki/URL_shortening) service that provides a shorturl for any given longurl.
+- For design documentation of the project look at `design_doc.pdf`.
+- For API documentation do one of following
+    - Look at `api_doc.pdf`
+    - Set up the app locally and look at `swagger-ui`
+
 ### How to setup the project?
 1. Clone the project.
 1. Set up the `virtualenv` for the project.
